@@ -20,13 +20,14 @@ export default defineConfig([
     plugins: [{
       name: 'firefly-inline-styles',
       resolveId(id, importer) {
-        if (id.endsWith('.css?inline') && importer) return resolve(dirname(importer), id)
+        if ((id.endsWith('.css?inline') || id.endsWith('.png?inline')) && importer) return resolve(dirname(importer), id)
       },
       async load(id) {
-        if (!id.endsWith('.css?inline')) return
+        if (!id.endsWith('.css?inline') && !id.endsWith('.png?inline')) return
         const file = id.slice(0, -'?inline'.length)
         this.addWatchFile(file)
-        return { code: 'export default ' + JSON.stringify(await readFile(file, 'utf8')), moduleType: 'js' }
+        const content = file.endsWith('.png') ? 'data:image/png;base64,' + (await readFile(file)).toString('base64') : await readFile(file, 'utf8')
+        return { code: 'export default ' + JSON.stringify(content), moduleType: 'js' }
       },
     }],
     outputOptions: {

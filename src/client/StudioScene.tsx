@@ -1,70 +1,88 @@
-import type { CSSProperties } from 'react'
+import { useId, type CSSProperties } from 'react'
+import { PixelFirefly } from './PixelFirefly.tsx'
+import { PixelCompanion, type CompanionKind } from './PixelCompanions.tsx'
+import { StarRailScreen } from './StarRailScreen.tsx'
 
 type Mode = 'idle' | 'working' | 'waiting' | 'error'
 
-function Plant({ x, y, small = false }: { x: number; y: number; small?: boolean }) {
-  return <g transform={`translate(${x} ${y}) scale(${small ? .6 : 1})`}>
-    <path d="M-2 0V-20h4V0M-2-12h-9v-6h-5v-7h9v7h5M2-18h9v-6h6v-7H8v7H2" fill="#688e76" />
-    <path d="M-2-24v-12h6v12M-8-19h-6v-4h6M10-24v-5h5v5" fill="#98bfa0" />
-    <path d="M-11 0h22v6H8v12H-8V6h-3" fill="#c99e83" /><path d="M-7 3H7v12H-7" fill="#e3b89a" />
+function Fan({ y }: { y: number }) {
+  return <g transform={`translate(87 ${y})`}>
+    <circle r="6" fill="#090d18" stroke="var(--ff-workstation-accent)" strokeWidth="1" />
+    <g className="ff-pc-rotor" fill="var(--ff-workstation-accent)" opacity=".6">
+      <path d="M0-1 0-5 3-3 2 0ZM1 0 5 0 3 3 0 2ZM0 1 0 5-3 3-2 0ZM-1 0-5 0-3-3 0-2Z" />
+    </g><circle r="1.2" fill="#cfe9f5" />
   </g>
 }
 
-function Desk({ x, y, hair, shirt, index }: { x: number; y: number; hair: string; shirt: string; index: number }) {
-  return <g transform={`translate(${x} ${y})`} data-worker={index} style={{ '--ff-worker-delay': (index * .26) + 's' } as CSSProperties}>
-    <ellipse cx="44" cy="90" rx="43" ry="7" fill="#8ca59a" opacity=".16" />
-    <path d="M16 47h14v39H16M79 47h7v39h-7" fill="#a18068" />
-    <path d="M9 41h87v10H9z" fill="#c09e7d" /><path d="M9 41h87v4H9z" fill="#e1c5a1" />
-    <path d="M58 14h29v23H58z" fill="#566c66" /><path d="M61 17h23v16H61z" fill="#aad4c4" />
-    <path d="M69 37h6v5h-6M66 41h12v2H66" fill="#647d73" />
-    <g className="ff-screen-lines" fill="#f0fff5"><path d="M64 21h12v2H64M64 25h17v2H64M64 29h8v2H64" /></g>
-    <path d="M57 44h21v3H57" fill="#f0e9d9" />
-    <path d="M88 34h6v7h-6M94 35h3v4h-3" fill="#f7ead3" /><path d="M88 34h6v2h-6" fill="#a9896e" />
-    <path d="M13 35h15v3H13" fill="#aeabc6" /><path d="M15 32h15v3H15" fill="#ede2c5" />
-    <path d="M23 67h27v12H23M33 79h6v8h-6M24 87h25v3H24" fill="#718a81" />
-    <path d="M26 76h7v12h-7M43 76h7v12h-7" fill="#586b68" /><path d="M23 86h12v5H23M43 86h11v5H43" fill="#3d5351" />
-    <g className="ff-worker-body">
-      <path d="M24 42h23v5h5v22H20V49h4" fill={shirt} />
-      <path d="M25 45h6v21h-6" fill="#fff" opacity=".2" />
-      <g className="ff-worker-arms"><path d="M45 49h8v5h10v5H49v-4h-4" fill={shirt} /><path d="M59 51h7v6h-7" fill="#eac7ad" /><path d="M24 51h-6v9h6v-4h7v-5" fill={shirt} /><path d="M28 50h6v6h-6" fill="#efcfb5" /></g>
-      <g className="ff-worker-head">
-        <path d="M23 15h21v4h5v20h-5v7H25v-4h-7V22h5" fill={hair} />
-        <path d="M30 25h17v13h-4v5H30z" fill="#efcdb2" />
-        <path d="M43 27h3v4h-3M43 35h4v2h-4" fill="#4c554d" />
-        <path d="M23 16h20v8H31v5h-8v10h-5V22h5" fill={hair} />
-        <path d="M24 16h16v3H24M21 22h3v11h-3" fill="#fff" opacity=".24" />
-        <rect x="30" y="39" width="7" height="6" fill="#e2b99b" />
-      </g>
-    </g>
-    <path d="M18 60h21v15H18z" fill="#88a498" /><path d="M21 59h15v3H21z" fill="#a2b9ac" />
+function Desk({ x, y, character, index }: { x: number; y: number; character: 'firefly' | CompanionKind; index: number }) {
+  const accent = character === 'silver-wolf' ? '#aa83ff' : character === 'firefly' ? '#91edb1' : '#6baeff'
+  return <g transform={`translate(${x} ${y})`} data-worker={index} style={{ '--ff-worker-delay': (index * .26) + 's', '--ff-workstation-accent': accent } as CSSProperties}>
+    <ellipse className="ff-desk-aura" cx="47" cy="87" rx="46" ry="10" fill={accent} opacity=".07" />
+    <path d="M17 48h8l-3 34H12v-4h5M81 48h7v33h8v4H80V51" fill="#263147" />
+    <path d="M11 40h83l5 4v8H7v-8Z" fill="#172035" stroke="#3c4862" strokeWidth="1" />
+    <path className="ff-desk-led" d="M8 48h87" stroke={accent} strokeWidth="1.5" />
+    <path d="M13 42h70v3H13" fill="#283149" />
+    <path d="M77 54h21v30H77Z" fill="#0b101e" stroke="#34425e" />
+    <Fan y={62} /><Fan y={76} />
+    <path d="M54 9h44v30H54z" fill="#101627" stroke="#485779" />
+    <StarRailScreen />
+    <path d="M72 39h6v4h-6M65 43h20v2H65" fill="#54607c" />
+    <path d="M54 44h23v3H54" fill="#13172b" /><path className="ff-keyboard-led" d="M55 45h5m2 0h5m2 0h6" stroke={accent} strokeWidth="1" />
+    <path d="M90 32h6v8h-6M96 33h2v4h-2" fill="#283550" /><path d="M91 33h4" stroke={accent} />
+    <path d="M15 35h14v4H15" fill="#483955" /><path d="M17 32h14v3H17" fill="#74678b" />
+    <path d="M22 50h17l5 6v18H20V57Z" fill="#1d283e" stroke="#415373" />
+    <path d="M24 52h11v3H24M23 66h14" stroke={accent} opacity=".7" />
+    <path d="M23 74h22v5H23M32 79h5v8h-5M22 87h27" stroke="#62708b" strokeWidth="2" />
+    <g transform="translate(4 2) scale(.88)">{character === 'firefly' ? <PixelFirefly pose="reading" /> : <PixelCompanion kind={character} />}</g>
   </g>
 }
 
-/** Decorative coworkers visualize a single assistant; no simulated task counts or agent identities. */
+/** Ambient gaming-room illustration, still driven by one assistant's actual activity state. */
 export function StudioScene({ mode, label }: { mode: Mode; label: string }) {
-  return <div data-firefly-studio data-mode={mode} role="img" aria-label={label}>
+  const id = useId()
+  return <div data-firefly-studio data-scene-theme="neon-gaming" data-mode={mode} role="img" aria-label={label}>
     <svg viewBox="0 0 440 204" fill="none" aria-hidden="true" shapeRendering="crispEdges">
-      <path d="M0 0h440v204H0z" fill="#e8ede1" />
-      <path d="M0 0h440v97H0z" fill="#e4eadb" /><path d="M0 97h440v107H0z" fill="#d9dfd0" />
-      <path d="M0 97h440v5H0" fill="#bccabc" />
-      <path d="M0 137h440M0 173h440M75 102v35M231 102v35M380 102v35M8 137v36M157 137v36M312 137v36M80 173v31M231 173v31M383 173v31" stroke="#c4cfc0" strokeWidth="1" />
-      <path d="M38 13h113v65H38z" fill="#a4bcb0" /><path d="M42 17h105v57H42z" fill="#c5ded2" />
-      <path d="M48 67V49h15V34h14v33M116 67V40h17v27" fill="#a3c5b5" /><path d="M76 67V42h23v25M99 67V55h14v12" fill="#b2d0bd" />
-      <path d="M94 17v57M42 44h105" stroke="#eef3e7" strokeWidth="4" /><path d="M33 77h123v6H33z" fill="#abbcaf" />
-      <path d="M185 27h46v33h-46z" fill="#b6a68f" /><path d="M189 31h38v25h-38z" fill="#f2edde" />
-      <path d="M199 49v-7h6v7h5V37h6v12h5v3h-26v-3" fill="#a3b99c" />
-      <path d="M288 36h97v5h-97zM299 57h74v5h-74z" fill="#b7a183" />
-      <path d="M298 20h6v16h-6M306 18h7v18h-7M315 23h5v13h-5" fill="#87a896" /><path d="M322 18h7v18h-7M331 21h6v15h-6" fill="#c8a391" />
-      <path d="M315 49h24v8h-24z" fill="#b6acc4" /><path d="M317 46h20v3h-20" fill="#e3d6bb" />
-      <Plant x={365} y={28} small />
-      <path d="M248 8h22v22h-22z" fill="#f4f0df" /><path d="M250 10h18v18h-18z" fill="#d4ddc9" /><path d="M259 13v7h5" stroke="#6e8273" strokeWidth="2" />
-      <Desk x={30} y={86} hair="#d3ded6" shirt="#80b6a1" index={1} />
-      <Desk x={164} y={62} hair="#826651" shirt="#d0b98d" index={2} />
-      <Desk x={289} y={89} hair="#51596a" shirt="#afa4ca" index={3} />
-      <Plant x={17} y={108} /><Plant x={416} y={133} />
-      <path d="M159 171h11v17h-11zM156 169h17v4h-17z" fill="#ae9478" /><path d="M157 161h7v8h-7M161 154h7v10h-7M168 160h6v9h-6" fill="#739f7e" />
-      <path d="M414 55v41h-3V55M402 55h23l-5-14h-13z" fill="#c7ad7e" /><path className="ff-office-lamp" d="M405 56h16l14 39h-44z" fill="#f9eabe" opacity=".18" />
-      <path d="M247 179h38v11h-38z" fill="#c2cab8" /><path d="M250 181h32v2h-32" fill="#e4e5d4" />
+      <defs>
+        <linearGradient id={id + '-wall'} x2="1" y2="1"><stop stopColor="#0b101e" /><stop offset=".5" stopColor="#211c39" /><stop offset="1" stopColor="#121b2e" /></linearGradient>
+        <linearGradient id={id + '-window'} x2="0" y2="1"><stop stopColor="#111830" /><stop offset="1" stopColor="#293458" /></linearGradient>
+        <linearGradient id={id + '-rgb'}><stop stopColor="#8058ca" /><stop offset=".4" stopColor="#638bff" /><stop offset=".8" stopColor="#6de8c3" /><stop offset="1" stopColor="#9defad" /></linearGradient>
+        <radialGradient id={id + '-pool'}><stop stopColor="#6446a3" stopOpacity=".35" /><stop offset="1" stopColor="#1a152b" stopOpacity="0" /></radialGradient>
+      </defs>
+      <path data-room-glass="base" d="M0 0h440v204H0Z" fill="#0a1020" fillOpacity=".16" />
+      <path data-room-glass="wall" d="M0 0h440v103H0Z" fill={`url(#${id}-wall)`} fillOpacity=".52" />
+      <path data-room-glass="floor" d="M0 103h440v101H0Z" fill="#101628" fillOpacity=".4" />
+      <ellipse cx="228" cy="150" rx="220" ry="65" fill={`url(#${id}-pool)`} />
+      <path d="M0 128h440M0 160h440M0 196h440M55 103 9 204M130 103 103 204M210 103 206 204M295 103 322 204M378 103 430 204" stroke="#26314c" />
+      <path className="ff-room-traces" d="M0 102h84l16 16h42M440 101H331l-16 16h-43M15 193h79l17-17h31M428 191h-71l-13-13h-53" stroke={`url(#${id}-rgb)`} strokeWidth="1" opacity=".7" />
+      <path d="M9 12h135l11-7h121l13 7h143M11 12v73M429 12v67" stroke="#3b3557" strokeWidth="2" />
+      <path className="ff-room-pulse" d="M13 14h105M309 14h112" stroke={`url(#${id}-rgb)`} strokeWidth="2" />
+      <path d="M30 25h121v52H30Z" fill="#090f21" stroke="#53618d" />
+      <path d="M34 29h113v44H34Z" fill={`url(#${id}-window)`} />
+      <path d="M36 70V58h10V48h12v22M61 70V43h14v27M80 70V54h13v16M99 70V39h13v31M116 70V48h13v22M134 70V55h11v15" fill="#141d36" />
+      <path className="ff-city-lights" d="M49 53h3m-3 5h3M65 47h6m-6 5h6m-6 5h6M103 44h5m-5 6h5m-5 6h5M120 53h5m-5 5h5M137 61h4" stroke="#7f8ddb" strokeWidth="1" />
+      <path d="M88 29v44M34 73h113" stroke="#3d4e75" strokeWidth="2" />
+      <path className="ff-city-traffic" d="M38 66h17M114 61h15" stroke="#67bde1" strokeWidth="1" />
+      <path d="M173 20h95v27h-95Z" fill="#10172b" stroke="#41385f" />
+      <path className="ff-room-pulse" d="M182 40h77" stroke="#9cedae" opacity=".6" />
+      <text x="220" y="35" textAnchor="middle" fontFamily="monospace" fontSize="10" letterSpacing="2" fill="#aedec9">FIREFLY</text>
+      <path d="M304 27h36v29h-36Z" fill="#281a34" stroke="#755d87" />
+      <path d="M313 34h17l-9 14-8-14Z" stroke="#a488d8" /><path d="M321 33v15" stroke="#c3aaeb" />
+      <path d="M351 27h34v29h-34Z" fill="#311926" stroke="#6b3b54" />
+      <path d="M357 46 364 33l5 13 10-13" stroke="#ab6578" strokeWidth="2" />
+      <path d="M301 65h86v5h-86" fill="#252942" /><path d="M305 66h76" stroke="#7562b2" />
+      <path d="M313 60v-9h6v9M325 60V49h8v11M340 60v-7h5v7" fill="#4f4971" />
+      <path d="M10 111h13v52H10Z" fill="#14192a" stroke="#344258" />
+      <path className="ff-server-status" d="M13 117h7m-7 8h7m-7 8h7m-7 8h7m-7 8h7" stroke="#7bd9ab" strokeWidth="2" />
+      <path d="M410 98h22v66h-22Z" fill="#1c1525" stroke="#4b2840" />
+      <path d="M414 104h14v16h-14M414 126h14v16h-14M414 148h14v10h-14" fill="#361b2d" />
+      <path className="ff-server-status" d="M417 109h8m-8 6h5M417 132h8m-8 5h5M417 152h8" stroke="#9e4769" />
+      <Desk x={30} y={86} character="silver-wolf" index={1} />
+      <Desk x={164} y={62} character="firefly" index={2} />
+      <Desk x={289} y={89} character="stelle" index={3} />
+      <path d="M151 163h17v23h-17Z" fill="#192538" stroke="#365569" />
+      <path className="ff-room-pulse" d="M156 168v12m6-12v12" stroke="#70dbb0" />
+      <path d="M254 181h37v7h-37" fill="#172039" /><path d="M260 181h25" stroke="#655ca1" />
+      <g className="ff-room-motes" fill="#83cdb7"><rect x="26" y="52" width="1" height="1" /><rect x="163" y="89" width="1" height="1" /><rect x="279" y="46" width="1" height="1" /><rect x="390" y="78" width="1" height="1" /></g>
     </svg>
   </div>
 }

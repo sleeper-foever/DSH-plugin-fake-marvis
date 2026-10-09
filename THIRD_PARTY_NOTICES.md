@@ -23,3 +23,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Reference photographs
+
+`src/client/assets/device-body.png`, `device-left.png`, and `device-right.png` are derived from the user-provided transformation-device photograph. `lib/client.js` embeds the same textures. The repository MIT licence does not grant rights to these photographs. Their original rights remain with the respective holders; their redistribution licence has not been independently verified. See [the asset notice](src/client/assets/NOTICE.md). No official affiliation is implied.

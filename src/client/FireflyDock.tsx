@@ -6,6 +6,7 @@ import type { FireflyKey } from './locales.ts'
 import { clampPosition, type Position } from './position.ts'
 import { TransformDevice } from './TransformDevice.tsx'
 import { StudioScene } from './StudioScene.tsx'
+import { CrystalFacets } from './CrystalFacets.tsx'
 
 interface Drag { pointerId: number; x: number; y: number; start: Position; latest: Position; moved: boolean }
 
@@ -65,7 +66,7 @@ export function FireflyDock(props: DockProps) {
   const constrain = (candidate: Position): Position => {
     const rect = dock.current?.getBoundingClientRect()
     return clampPosition(candidate, { width: window.innerWidth, height: window.innerHeight },
-      { width: rect?.width ?? 84, height: rect?.height ?? 84 })
+      { width: rect?.width ?? 100, height: rect?.height ?? 100 })
   }
 
   useLayoutEffect(() => {
@@ -148,6 +149,7 @@ export function FireflyDock(props: DockProps) {
       onPointerMove={event => { event.stopPropagation() }}
       onKeyDown={event => { if (event.key === 'Escape' && expanded) { event.preventDefault(); event.stopPropagation(); setConfirmNew(false); close() } }}>
       {expanded && <section id={panelId} className="ff-panel" role="dialog" aria-modal="false" aria-labelledby={titleId}>
+        <CrystalFacets />
         <header className="ff-header">
           <div className="ff-wordmark"><span className="ff-header-device"><TransformDevice size={40} /></span>
             <div><h2 id={titleId}>FIREFLY <span lang="zh">流萤</span></h2><p className="ff-subtitle">{t('studio.subtitle')}</p></div>
@@ -235,7 +237,7 @@ export function FireflyDock(props: DockProps) {
         {...dragHandlers} onClick={() => {
           if (suppressClick.current) { suppressClick.current = false; return }
           if (expanded) close(); else setExpanded(true)
-        }}><TransformDevice size={82} /><span className="ff-orb-dot" aria-hidden="true" /></button>
+        }}><TransformDevice size={100} expanded={expanded} /><span className="ff-orb-dot" aria-hidden="true" /></button>
     </div>
   )
 }
