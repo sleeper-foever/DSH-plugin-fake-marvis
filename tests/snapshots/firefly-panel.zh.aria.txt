@@ -1,0 +1,21 @@
+- dialog "FIREFLY 流萤":
+  - banner:
+    - heading "FIREFLY 流萤" [level=2]
+    - paragraph: FIREFLY STUDIO · 独立对话
+    - button "拖动助手；方向键微调位置"
+    - button "收起 Firefly 助手"
+  - status: 等待开始
+  - img "三位像素小人在自己的工位上，动作反映同一个助手的状态，不代表真实多代理任务。"
+  - text: 工位就绪，等你的新想法 状态小剧场
+  - heading "欢迎来到流萤工作室" [level=3]
+  - paragraph: 把问题留在这里，我们一起慢慢解决。
+  - text: 关联工作区
+  - combobox "关联工作区":
+    - option "fixture · /tmp/fixture" [selected]
+    - option "project · /home/fixture/Documents/project"
+  - paragraph: 采用 DSH 默认策略，不读取主聊天。
+  - textbox "和流萤对话":
+    - /placeholder: 说说你的想法…
+  - text: 开始独立对话
+  - button "开始独立对话" [disabled]
+  - text: DSH 默认会话策略 独立上下文

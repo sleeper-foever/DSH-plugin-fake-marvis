@@ -1,0 +1,12 @@
+node_modules/
+artifacts/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.log
+*.bak
+*.bak-*
+.DS_Store
+lib/types/**/*.js
+lib/**/*.map

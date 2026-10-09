@@ -1,0 +1,6 @@
+/* Compatibility fixture: dsh-theme-firefly installed dock rule. */
+.ff-dock { position: fixed; right: 12px; bottom: 12px; z-index: 90; display: flex; align-items: center; gap: 7px;
+  padding: 6px 8px; border-radius: 999px; background: rgba(10, 18, 32, 0.42);
+  border: 1px solid rgba(125, 255, 158, 0.28); box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%);
+  cursor: grab; user-select: none; -webkit-user-select: none; touch-action: none; }

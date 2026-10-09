@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true,
+    "rootDir": "src",
+    "outDir": "lib/types",
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "react",
+      "react-dom"
+    ],
+    "jsx": "react-jsx",
+    "tsBuildInfoFile": "lib/client.tsbuildinfo"
+  },
+  "include": [
+    "src/config.ts",
+    "src/client/**/*.ts",
+    "src/client/**/*.tsx"
+  ]
+}
